@@ -42,7 +42,7 @@ class Server:
 
     def get_page(self, page: int = 1, page_size: int = 10) -> List[List]:
         """
-        given a page_number and a page_size, 
+        given a page_number and a page_size,
         returns a list of items corresponding to that range
         """
         assert type(page) is int and type(page_size) is int\

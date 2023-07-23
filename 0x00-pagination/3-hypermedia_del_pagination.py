@@ -14,6 +14,9 @@ class Server:
     DATA_FILE = "Popular_Baby_Names.csv"
 
     def __init__(self):
+        """
+        Initialize the Server
+        """
         self.__dataset = None
         self.__indexed_dataset = None
 
@@ -46,7 +49,6 @@ class Server:
         indexed_dataset = self.indexed_dataset()
         last_index = list(indexed_dataset.keys())[-1]
         assert index >= 0 and index <= last_index
-
 
         return {
             "index": index if index and index <= last_index else 0,

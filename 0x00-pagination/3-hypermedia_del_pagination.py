@@ -52,7 +52,9 @@ class Server:
 
         return {
             "index": index if index and index <= last_index else 0,
-            "next_index": index + page_size if index + page_size < len(indexed_dataset.keys()) else 0,
-            "page_size": page_size if index - last_index > page_size else index - last_index,
+            "next_index": index + page_size
+            if index + page_size < len(indexed_dataset.keys()) else 0,
+            "page_size": page_size if
+            index - last_index > page_size else index - last_index,
             "data": [indexed_dataset[i] for i in range(index, index+page_size)]
         }

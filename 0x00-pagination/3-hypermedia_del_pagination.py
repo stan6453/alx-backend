@@ -50,11 +50,25 @@ class Server:
         last_index = list(indexed_dataset.keys())[-1]
         assert index >= 0 and index <= last_index
 
+        dataset_index = list(indexed_dataset.keys())
+
+        temp_index = index
+        while True:
+            try:
+                target_index = dataset_index.index(temp_index)
+                break
+            except Exception:
+                temp_index = temp_index + 1
+                if temp_index > last_index:
+                    break
+
+        dataset_index = dataset_index[target_index:target_index+page_size]
+
         return {
             "index": index if index and index <= last_index else 0,
-            "next_index": index + page_size
-            if index + page_size < len(indexed_dataset.keys()) else 0,
+            "next_index": temp_index + page_size
+            if temp_index + page_size < len(indexed_dataset.keys()) else 0,
             "page_size": page_size if
-            index - last_index > page_size else index - last_index,
-            "data": [indexed_dataset[i] for i in range(index, index+page_size)]
+            last_index - index > page_size else last_index - index,
+            "data": [indexed_dataset[i] for i in dataset_index]
         }

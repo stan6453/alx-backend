@@ -50,19 +50,36 @@ class Server:
         last_index = list(indexed_dataset.keys())[-1]
         assert index >= 0 and index <= last_index
 
-        dataset_index = list(indexed_dataset.keys())
+        # Get the list of all indexed_dataset keys
+        # note that deleted indexes wont be part of these keys
+        dataset_keys = list(indexed_dataset.keys())
 
+        """
+        store the target index in temp_index.
+        since the target index might have been deleted,
+        keep increasing the index till you get to an index that exits,
+        or you hit the end of the dataset, at which point you stop searching.
+        """
         temp_index = index
         while True:
             try:
-                target_index = dataset_index.index(temp_index)
+                # try to get an index
+                target_index = dataset_keys.index(temp_index)
+                # exit if successful
                 break
             except Exception:
+                # increase temp_index to the next index to search for
                 temp_index = temp_index + 1
+                # exit if end of indexed_dataset
                 if temp_index > last_index:
                     break
 
-        dataset_index = dataset_index[target_index:target_index+page_size]
+        """
+        use the index you found to slice the keys of indexed_dataset
+        to include only existing keys within the page_size boundary
+        i.e get items from target_index to target_index + page_size
+        """
+        dataset_keys = dataset_keys[target_index:target_index+page_size]
 
         return {
             "index": index if index and index <= last_index else 0,
@@ -70,5 +87,5 @@ class Server:
             if temp_index + page_size < len(indexed_dataset.keys()) else 0,
             "page_size": page_size if
             last_index - index > page_size else last_index - index,
-            "data": [indexed_dataset[i] for i in dataset_index]
+            "data": [indexed_dataset[i] for i in dataset_keys]
         }

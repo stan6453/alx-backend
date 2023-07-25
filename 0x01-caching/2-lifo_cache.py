@@ -22,7 +22,8 @@ class LIFOCache(BaseCaching):
             self.cache_stack.append(key)
         # if the value the key points to has changed
         if self.cache_data.get(key) != item:
-            # treat the key as a new entry in the stack since its value changed.
+            # treat the key as a new entry in the stack since
+            # its value changed.
             self.cache_stack.remove(key)
             self.cache_stack.append(key)
             self.cache_data[key] = item

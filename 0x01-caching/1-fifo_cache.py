@@ -22,7 +22,8 @@ class FIFOCache(BaseCaching):
             self.cache_queue.insert(0, key)
         # if the value the key points to has changed
         if self.cache_data.get(key) != item:
-            # do not treat the key as a new entry in the queue, just update the value
+            # do not treat the key as a new entry in the queue,
+            # just update the value
             self.cache_data[key] = item
 
     def get(self, key):

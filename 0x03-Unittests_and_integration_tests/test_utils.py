@@ -3,7 +3,7 @@
 
 import unittest
 from unittest.mock import patch, MagicMock
-from utils import access_nested_map, get_json
+from utils import access_nested_map, get_json, memoize
 from parameterized import parameterized
 from typing import (
     Mapping,
@@ -58,3 +58,35 @@ class TestGetJson(unittest.TestCase):
 
         mock_get.assert_called_once_with(test_url)
         self.assertEqual(result, test_payload)
+
+
+class TestMemoize(unittest.TestCase):
+    """TODO: """
+
+    def test_memoize(self):
+        """TODO: """
+
+        class TestClass:
+            def a_method(self):
+                return 42
+
+            @memoize
+            def a_property(self):
+                return self.a_method()
+
+        # Mock the a_method
+        with patch.object(TestClass, 'a_method') as mocked_method:
+            test_obj = TestClass()
+            # Set the return value of the mocked a_method
+            mocked_method.return_value = 42
+
+            # Call the a_property twice
+            result1 = test_obj.a_property
+            result2 = test_obj.a_property
+
+            # Assert that the a_method was called only once
+            mocked_method.assert_called_once()
+
+            # Assert that the results are correct
+            self.assertEqual(result1, 42)
+            self.assertEqual(result2, 42)

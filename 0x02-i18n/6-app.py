@@ -4,7 +4,7 @@
 from flask import Flask, render_template, request, g
 from flask_babel import Babel
 from flask import request
-from typing import Mapping
+from typing import Mapping, Union
 
 
 # mock database users
@@ -16,7 +16,7 @@ users = {
 }
 
 
-def get_user(id: int) -> Mapping:
+def get_user(id: int) -> Union[Mapping, None]:
     """return a user with the specified id"""
     return users.get(id)
 
@@ -42,13 +42,18 @@ babel = Babel(app)
 @babel.localeselector
 def get_locale() -> str:
     """add list of supported languages to flask's Accept-Language header"""
-    if 'locale' in request.args and\
-            request.args['locale'] in app.config['LANGUAGES']:
-        return request.args['locale']
-    if g.user and g.user.get('locale'):
-        return g.user.get('locale')
-    if request.headers.get('locale'):
-        return request.headers.get('locale')
+    locale =  request.args.get('locale')
+    if locale and locale in app.config['LANGUAGES']:
+        return locale
+    
+    locale = g.user and g.user.get('locale')
+    if locale and locale in app.config['LANGUAGES']:
+        return locale
+    
+    local = request.headers.get('locale')
+    if local and local in app.config['LANGUAGES']:
+        return local
+    
     return request.accept_languages.best_match(app.config['LANGUAGES'])
 
 

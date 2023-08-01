@@ -47,6 +47,8 @@ def get_locale() -> str:
         return request.args['locale']
     if g.user and g.user.get('locale'):
         return g.user.get('locale')
+    if request.headers.get('locale'):
+        return request.headers.get('locale')
     return request.accept_languages.best_match(app.config['LANGUAGES'])
 
 
@@ -62,7 +64,7 @@ def before_request():
 @app.route('/')
 def index() -> str:
     """main route"""
-    return render_template('5-index.html')
+    return render_template('6-index.html')
 
 
 if __name__ == '__main__':

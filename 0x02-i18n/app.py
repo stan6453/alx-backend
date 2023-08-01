@@ -5,6 +5,7 @@ from flask import Flask, render_template, request, g
 from flask_babel import Babel
 from flask import request
 import pytz
+from datetime import datetime
 from typing import Mapping, Union
 
 
@@ -73,7 +74,7 @@ def get_timezone():
             return timezone
     except pytz.UnknownTimeZoneError:
         pass
-    
+
     return app.config['BABEL_DEFAULT_TIMEZONE']
 
 
@@ -89,7 +90,7 @@ def before_request():
 @app.route('/')
 def index() -> str:
     """main route"""
-    return render_template('6-index.html')
+    return render_template('index.html', datetime=datetime)
 
 
 if __name__ == '__main__':

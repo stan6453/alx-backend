@@ -52,6 +52,7 @@ def before_request():
     g.user = get_user(int(request.args.get('login_as')))
     print('user:', g.user)
 
+
 @app.route('/')
 def index() -> str:
     """main route"""

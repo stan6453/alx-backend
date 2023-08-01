@@ -6,6 +6,6 @@ app = Flask(__name__)
 
 
 @app.route('/', methods=['GET'], strict_slashes=True)
-def index():
+def index() -> str:
     """main route"""
     return render_template('0-index.html')

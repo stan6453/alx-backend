@@ -42,18 +42,18 @@ babel = Babel(app)
 @babel.localeselector
 def get_locale() -> str:
     """add list of supported languages to flask's Accept-Language header"""
-    locale =  request.args.get('locale')
+    locale = request.args.get('locale')
     if locale and locale in app.config['LANGUAGES']:
         return locale
-    
+
     locale = g.user and g.user.get('locale')
     if locale and locale in app.config['LANGUAGES']:
         return locale
-    
+
     local = request.headers.get('locale')
     if local and local in app.config['LANGUAGES']:
         return local
-    
+
     return request.accept_languages.best_match(app.config['LANGUAGES'])
 
 

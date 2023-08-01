@@ -23,7 +23,7 @@ babel = Babel(app)
 
 
 @babel.localeselector
-def get_locale():
+def get_locale() -> str:
     """add list of supported languages to flask's Accept-Language header"""
     return request.accept_languages.best_match(app.config["LANGUAGES"])
 
@@ -31,7 +31,7 @@ def get_locale():
 @app.route('/')
 def index() -> str:
     """main route"""
-    return render_template('1-index.html')
+    return render_template('3-index.html')
 
 
 if __name__ == '__main__':

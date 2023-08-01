@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """i18n compliant flask app"""
 
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, g
 from flask_babel import Babel
 from flask import request
 from typing import Mapping
@@ -49,12 +49,13 @@ def get_locale() -> str:
 
 @app.before_request
 def before_request():
-    app.g.user = get_user(request.args.get('login_as'))
+    g.user = get_user(int(request.args.get('login_as')))
+    print('user:', g.user)
 
 @app.route('/')
 def index() -> str:
     """main route"""
-    return render_template('4-index.html')
+    return render_template('5-index.html')
 
 
 if __name__ == '__main__':

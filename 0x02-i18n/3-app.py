@@ -2,7 +2,7 @@
 """i18n compliant flask app"""
 
 from flask import Flask, render_template
-from flask_babel import Babel
+from flask_babel import Babel, gettext
 from flask import request
 
 app = Flask(__name__)
@@ -29,9 +29,10 @@ def get_locale() -> str:
 
 
 @app.route('/')
-def index() -> str:
-    """main route"""
-    return render_template('3-index.html')
+def index():
+    home_title = gettext('home_title')
+    home_header = gettext('home_header')
+    return render_template('3-index.html', home_title=home_title, home_header=home_header)
 
 
 if __name__ == '__main__':

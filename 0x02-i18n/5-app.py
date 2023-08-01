@@ -52,7 +52,6 @@ def get_locale() -> str:
 def before_request():
     """populate flask global variable with the logged-in user"""
     g.user = get_user(int(request.args.get('login_as')))
-    print('user:', g.user)
 
 
 @app.route('/')

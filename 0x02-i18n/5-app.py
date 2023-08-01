@@ -17,6 +17,7 @@ users = {
 
 
 def get_user(id: int) -> Mapping:
+    """return a user with the specified id"""
     return users.get(id)
 
 
@@ -49,6 +50,7 @@ def get_locale() -> str:
 
 @app.before_request
 def before_request():
+    """populate flask global variable with the logged-in user"""
     g.user = get_user(int(request.args.get('login_as')))
     print('user:', g.user)
 

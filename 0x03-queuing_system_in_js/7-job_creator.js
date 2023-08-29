@@ -54,7 +54,7 @@ for (const job_data of jobs) {
   const job = queue.create(job_type, job_data)
     .save(function (err) {
       if (!err) console.log(`Notification job created: ${job.id}`);
-    })
+    });
 
 
   job.on('complete', function (result) {
